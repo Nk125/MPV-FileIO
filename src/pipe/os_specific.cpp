@@ -117,11 +117,12 @@ namespace pipe {
 			if (GetLastError() != ERROR_IO_PENDING) {
 				DWORD transfer = 0;
 
-				completed = GetOverlappedResult(
+				completed = GetOverlappedResultEx(
 					underlyingPipe,
 					&writeOperation,
 					&transfer,
-					true
+					10000,
+					false
 				);
 
 				if (completed) {
@@ -164,11 +165,12 @@ namespace pipe {
 				if (gle == ERROR_IO_PENDING) {
 					DWORD transfer = 0;
 
-					bool res = GetOverlappedResult(
+					bool res = GetOverlappedResultEx(
 						underlyingPipe, 
 						&readOperation, 
 						&transfer, 
-						true);
+						10000,
+						false);
 
 					gle = GetLastError();
 
